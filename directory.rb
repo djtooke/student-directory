@@ -1,9 +1,9 @@
 # Don't need this old array any more
 # students = [
-#   {name: "Dr. Hannibal Lecter", cohort: :november},
-#   {name: "Darth Vader", cohort: :november},
-#   {name: "Nurse Ratched", cohort: :november},
-#   {name: "Michael Corleone", cohort: :november},
+#   {name: "Dr. Hannibal Lecter", cohort: :April},
+#   {name: "Darth Vader", cohort: :may},
+#   {name: "Nurse Ratched", cohort: :may},
+#   {name: "Michael Corleone", cohort: :may},
 #   {name: "Alex DeLarge", cohort: :november},
 #   {name: "The Wicked Witch of the West", cohort: :november},
 #   {name: "Terminator", cohort: :november},
@@ -89,8 +89,39 @@ def print_students_under_n_letters(students)
   end
 end
 
+def students_by_user_cohort(students)
+  studentarray = []
+  puts "Input a cohort to search for:"
+  cohort = gets.chomp.capitalize
+  students.each do |student|
+    if student[:cohort] == cohort.to_sym
+       studentarray << student[:name]
+    end
+  end
+  puts "Alright, here are all the students in the #{cohort} cohort:"
+  puts studentarray
+end
+
+def group_by_cohorts(students)
+# Gives a list of students by cohort
+  puts "Are you ready for a list of students by cohort? Well, either way here you go."
+  cohorts = students.map {|student| student[:cohort]}
+  cohorts = cohorts.uniq
+  students_by_cohort = []
+  cohorts.each do |cohort|
+    students_by_cohort << "#{cohort.capitalize}:"
+    students.each do |student|
+      if student[:cohort] == cohort
+        students_by_cohort << student[:name]
+      end
+    end
+  end
+  puts students_by_cohort
+end
+
 students = input_students_name_cohort_hobby
 print_header
-#print(students)
 print(students)
 print_footer(students)
+group_by_cohorts(students)
+#students_by_user_cohort(students)
