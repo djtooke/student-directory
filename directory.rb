@@ -143,6 +143,7 @@ def print_menu_list
   3 for selecting a cohort group of students
   4 for printing all students by cohort
   5 for saving the student database to disc
+  6 for loading the student database from disc
   9 for exiting and going and making tea or something"
 end
 
@@ -164,6 +165,8 @@ def process(choice)
     group_by_cohorts
   when 5
     save_students
+  when 6
+    load_students
   when 9
     exit
   else
@@ -192,6 +195,15 @@ def save_students
   file.close
 end
 
+def load_students
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+# Assigning multiple variables per line!
+    name, cohort, hobby = line.chomp.split(',')
+    @students << {name: name, cohort: cohort.to_sym, hobby: hobby.to_sym}
+  end
+  file.close
+end
 
 # print(oldstudents)
 # students = input_students_name_cohort_hobby
