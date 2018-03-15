@@ -20,13 +20,13 @@ def input_students
   puts "To finish, just hit return twice."
   #creates an empty array
   students = []
-  name = gets.chomp
+  name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
     students << {name: name, cohort: :november}
     puts "Now we have #{students.count} students"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 # return the array of students, otherwise the array remains a local variable
   students
@@ -39,13 +39,13 @@ def input_students_name_cohort_hobby
       hobby: :Bogeling
     }
     puts "Please input the name of a student! Or to finish, just hit return."
-    newname = gets.chomp
+    newname = STDIN.gets.chomp
     if newname.empty? then return @students else newstudent[:name] = newname end
     puts "Cohort? If you just press enter I'll assume it's Smarch."
-    cohort = gets.chomp.capitalize
+    cohort = STDIN.gets.chomp.capitalize
     if cohort != "" then newstudent[:cohort] = cohort.to_sym end
     puts "Hobby? The default is bogeling because everyone likes bogeling."
-    hobby = gets.chomp.capitalize
+    hobby = STDIN.gets.chomp.capitalize
     if hobby != "" then newstudent[:hobby] = hobby.to_sym end
     # @students << {name: name, cohort: cohort, hobby: hobby}
     @students << newstudent
@@ -62,7 +62,7 @@ def print_students_list
   return nil if @students.length == 0
 # Commented out lines give user the choice of a centre-oriented list
   # puts "Do you want the list nice and central? Yes or no?"
-  # choice = gets.chomp.downcase
+  # choice = STDIN.gets.chomp.downcase
   # if choice == "yes"
   #   @students.each_with_index do |student, num|
   #   puts ("#{num + 1}. #{student[:name]} (#{student[:cohort].capitalize} cohort; Their favourite hobby is #{student[:hobby]})".center(100))
@@ -83,7 +83,7 @@ end
 def print_students_starting_with_letter
   return nil if @students.length == 0
   puts "Alright then, give us a letter:"
-  letter = gets.chomp.downcase
+  letter = STDIN.gets.chomp.downcase
   puts "Okay, here are all the names beginning with #{letter}"
   @students.each_with_index do |student, num|
     if student[:name][0].downcase == letter
@@ -95,7 +95,7 @@ end
 def print_students_under_n_letters
   return nil if @students.length == 0
   puts "Alright then, give us a number:"
-  number = gets.chomp.to_i
+  number = STDIN.gets.chomp.to_i
   puts "Okay, here are all the names shorter than #{number} letters:"
   @students.each_with_index do |student, num|
     if student[:name].length <= number
@@ -108,7 +108,7 @@ def students_by_user_cohort
   return nil if @students.length == 0
   studentarray = []
   puts "Input a cohort to search for:"
-  cohort = gets.chomp.capitalize
+  cohort = STDIN.gets.chomp.capitalize
   @students.each do |student|
     if student[:cohort] == cohort.to_sym
        studentarray << student[:name]
@@ -177,7 +177,7 @@ end
 def interactive_menu
   loop do
     print_menu_list
-    process(gets.chomp.to_i)
+    process(STDIN.gets.chomp.to_i)
   end
 end
 
@@ -195,8 +195,20 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def try_load_students
+  filename = ARGV.first #first argument from command line
+  return if filename.nil? #get out of the method if command wasn't given
+  if File.exists?(filename) #if it exists
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
 # Assigning multiple variables per line!
     name, cohort, hobby = line.chomp.split(',')
@@ -214,4 +226,5 @@ end
 # students_by_user_cohort(students)
 # print_students_under_n_letters(students)
 # print_students_starting_with_letter(students)
+try_load_students
 interactive_menu
