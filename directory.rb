@@ -58,6 +58,7 @@ def print_header
 end
 
 def print(students)
+  return nil if students.length == 0
   students.each_with_index do |student, num|
     puts "#{num + 1}. #{student[:name]} (#{student[:cohort].capitalize} cohort; Their favourite hobby is #{student[:hobby]})"
   end
@@ -68,6 +69,7 @@ def print_footer(names)
 end
 
 def print_students_starting_with_letter(students)
+  return nil if students.length == 0
   puts "Alright then, give us a letter:"
   letter = gets.chomp.downcase
   puts "Okay, here are all the names beginning with #{letter}"
@@ -79,6 +81,7 @@ def print_students_starting_with_letter(students)
 end
 
 def print_students_under_n_letters(students)
+  return nil if students.length == 0
   puts "Alright then, give us a number:"
   number = gets.chomp.to_i
   puts "Okay, here are all the names shorter than #{number} letters:"
@@ -90,6 +93,7 @@ def print_students_under_n_letters(students)
 end
 
 def students_by_user_cohort(students)
+  return nil if students.length == 0
   studentarray = []
   puts "Input a cohort to search for:"
   cohort = gets.chomp.capitalize
@@ -104,6 +108,7 @@ end
 
 def group_by_cohorts(students)
 # Gives a list of students by cohort
+  return nil if students.length == 0
   puts "Are you ready for a list of students by cohort? Well, either way here you go."
   cohorts = students.map {|student| student[:cohort]}
   cohorts = cohorts.uniq
@@ -124,4 +129,6 @@ print_header
 print(students)
 print_footer(students)
 group_by_cohorts(students)
-#students_by_user_cohort(students)
+# students_by_user_cohort(students)
+# print_students_under_n_letters(students)
+# print_students_starting_with_letter(students)
