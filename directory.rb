@@ -1,17 +1,16 @@
-# Don't need this old array any more
-# students = [
-#   {name: "Dr. Hannibal Lecter", cohort: :April},
-#   {name: "Darth Vader", cohort: :may},
-#   {name: "Nurse Ratched", cohort: :may},
-#   {name: "Michael Corleone", cohort: :may},
-#   {name: "Alex DeLarge", cohort: :november},
-#   {name: "The Wicked Witch of the West", cohort: :november},
-#   {name: "Terminator", cohort: :november},
-#   {name: "Freddy Krueger", cohort: :november},
-#   {name: "The Joker", cohort: :november},
-#   {name: "Joffrey Baratheon", cohort: :november},
-#   {name: "Norman Bates", cohort: :november}
-# ]
+oldstudents = [
+  {name: "Dr. Hannibal Lecter", cohort: :April},
+  {name: "Darth Vader", cohort: :may},
+  {name: "Nurse Ratched", cohort: :may},
+  {name: "Michael Corleone", cohort: :may},
+  {name: "Alex DeLarge", cohort: :november},
+  {name: "The Wicked Witch of the West", cohort: :november},
+  {name: "Terminator", cohort: :november},
+  {name: "Freddy Krueger", cohort: :november},
+  {name: "The Joker", cohort: :november},
+  {name: "Joffrey Baratheon", cohort: :november},
+  {name: "Norman Bates", cohort: :november}
+]
 
 def input_students
   puts "Please enter the name of a student!"
@@ -59,8 +58,18 @@ end
 
 def print(students)
   return nil if students.length == 0
-  students.each_with_index do |student, num|
+  puts "Do you want the list nice and central? Yes or no?"
+  choice = gets.chomp.downcase
+  if choice == "yes"
+    students.each_with_index do |student, num|
+    puts ("#{num + 1}. #{student[:name]} (#{student[:cohort].capitalize} cohort; Their favourite hobby is #{student[:hobby]})".center(100))
+  end
+  elsif choice == "no"
+    students.each_with_index do |student, num|
     puts "#{num + 1}. #{student[:name]} (#{student[:cohort].capitalize} cohort; Their favourite hobby is #{student[:hobby]})"
+    end
+  else
+    puts "Well, you didn't answer yes or no so I'm going on strike."
   end
 end
 
@@ -124,11 +133,12 @@ def group_by_cohorts(students)
   puts students_by_cohort
 end
 
-students = input_students_name_cohort_hobby
-print_header
-print(students)
-print_footer(students)
-group_by_cohorts(students)
+print(oldstudents)
+# students = input_students_name_cohort_hobby
+# print_header
+# print(students)
+# print_footer(students)
+# group_by_cohorts(students)
 # students_by_user_cohort(students)
 # print_students_under_n_letters(students)
 # print_students_starting_with_letter(students)
