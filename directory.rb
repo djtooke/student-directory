@@ -133,7 +133,34 @@ def group_by_cohorts(students)
   puts students_by_cohort
 end
 
-print(oldstudents)
+def interactive_menu
+  students = []
+  loop do
+    puts "Alright, well here we are. These are your options:
+    1 for inputting students
+    2 for printing a list of students
+    3 for selecting a cohort group of students
+    4 for printing all students by cohort
+    9 for exiting and going and making tea or something"
+    choice = gets.chomp.to_i
+    case choice
+    when 1
+      students = input_students_name_cohort_hobby
+    when 2
+      print_header
+      print(students)
+      print_footer(students)
+    when 3
+      students_by_user_cohort(students)
+    when 4
+      group_by_cohorts(students)
+    when 9
+      exit
+    end
+  end
+end
+
+# print(oldstudents)
 # students = input_students_name_cohort_hobby
 # print_header
 # print(students)
@@ -142,3 +169,4 @@ print(oldstudents)
 # students_by_user_cohort(students)
 # print_students_under_n_letters(students)
 # print_students_starting_with_letter(students)
+interactive_menu
