@@ -142,6 +142,7 @@ def print_menu_list
   2 for printing a list of students
   3 for selecting a cohort group of students
   4 for printing all students by cohort
+  5 for saving the student database to disc
   9 for exiting and going and making tea or something"
 end
 
@@ -161,6 +162,8 @@ def process(choice)
     students_by_user_cohort
   when 4
     group_by_cohorts
+  when 5
+    save_students
   when 9
     exit
   else
@@ -175,6 +178,19 @@ def interactive_menu
   end
 end
 
+def save_students
+  # open the file for writing
+  file = File.open("students.csv", "w")
+  #iterate over the array of students
+  @students.each do |student|
+    #turns hash data into array for one student at a time
+    student_data = [student[:name], student[:cohort], student[:hobby]]
+    # turns array into a string
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
 
 
 # print(oldstudents)
